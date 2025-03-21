@@ -83,8 +83,18 @@ public class SQLQuizUsers {
             throw new RuntimeException(e);
         }
     }
-    public static void studentAnswerQuestion(String question_id, boolean isCorrect){
+    public static void studentAnswerQuestion(String question_id, boolean isCorrect, String student_name){
+        String SQLQuery = "UPDATE " + tablename_student + " SET " + question_id + " = " + isCorrect + " WHERE (name = \"" + student_name + "\");";
+        try (
+                Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
+                Statement statement = connection.createStatement();
+                ){
+            statement.executeUpdate(SQLQuery);
+            System.out.println("Successfully updated " + question_id + " column");
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

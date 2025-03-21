@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
@@ -15,9 +16,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class StudentViewController {
     public GridPane gpQuestionList;
+    public Button btnExit;
     int score = 0;
     int page = 1;
     public Button btnBack;
@@ -28,17 +31,22 @@ public class StudentViewController {
     public Button b;
     public Button c;
     public Button d;
+    public Label lblPage;
 
     public Label lblScore;
     public List<Question> questions;
     public List<QuestionCard> questionCards;
     public Button[] btnChoices;
+    private void updateLblPage(){
+        lblPage.setText(page + "/" + questions.size());
+    }
     public void initialize() throws IOException {
         questions = new ArrayList<>();
         SQLQuestions.retrieveQuestions(questions);
         lblQuestion.setText("Question 1: " + questions.get(0).question);
         lblScore.setText(score + "/" + questions.size());
         questionCards = new ArrayList<>();
+        updateLblPage();
         for(int i = 0; i < questions.size(); i++){
             QuestionCard q = new QuestionCard(String.valueOf(i+1),i);
             questionCards.add(q);
@@ -69,6 +77,7 @@ public class StudentViewController {
     }
     public void onQuestionCardClicked(ActionEvent actionEvent) {
         page = ((QuestionCard)(actionEvent.getSource())).getIndex() + 1;
+        updateLblPage();
         lblQuestion.setText("Question " + (page) + ": " + questions.get(page-1).question);
         List<Button> btnClones = new ArrayList<>();
         btnClones.add(a);
@@ -105,7 +114,7 @@ public class StudentViewController {
             page++;
         }
         checkNavigationButton();
-
+        updateLblPage();
 
 
         lblQuestion.setText("Question " + (page) + ": " + questions.get(page-1).question);
@@ -143,13 +152,17 @@ public class StudentViewController {
         String ans = ((Button)event.getSource()).getText();
         QuestionCard q = questionCards.get(page-1);
         q.getStyleClass().clear();
+        Boolean isCorrect;
         if(Objects.equals(ans, questions.get(page - 1).choices[0])){
             score++;
             lblScore.setText(score + "/" + questions.size());
             q.getStyleClass().add("questionCardCorrect");
+            isCorrect = true;
         } else {
             q.getStyleClass().add("questionCardWrong");
+            isCorrect = false;
         }
+        SQLQuizUsers.studentAnswerQuestion("question_" + questions.get(page - 1).id,isCorrect,MainApplication.currentUser);
         for(Button b : btnChoices){
             String item = b.getText();
             b.getStyleClass().clear();
@@ -159,6 +172,25 @@ public class StudentViewController {
                 b.getStyleClass().add("wrongButton");
             }
             questions.get(page - 1).isAnswered = true;
+        }
+    }
+    @FXML
+    public void onExitClick(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to exit?");
+
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        alert.getDialogPane().getStyleClass().add("custom-alert");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            try {
+                MainApplication.changeScene("login-view.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
