@@ -7,19 +7,29 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoginViewController {
 
 
     public TextField tfUsername;
+    public ImageView logo;
 
     private String getUsername(){
         return tfUsername.getText();
     }
 
+
+    public void initialize(){
+        Image image = new Image(Objects.requireNonNull(getClass().getResource("logo.png")).toExternalForm());
+        logo.setImage(image);
+
+    }
     private void loginAsTeacher(String username) throws IOException {
         MainApplication.currentUser = username;
         MainApplication.changeScene("teacher-view.fxml");

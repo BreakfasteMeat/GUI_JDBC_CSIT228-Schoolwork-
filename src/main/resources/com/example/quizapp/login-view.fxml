@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.quizapp.LoginViewController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="loginScreen" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.quizapp.LoginViewController">
    <children>
-      <Label text="Login Quiz" />
-      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0">
+      <ImageView fx:id="logo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <Label styleClass="loginTitle" text="QuickQuiz" />
+      <VBox maxWidth="370.0" prefHeight="73.0" prefWidth="370.0">
          <children>
-            <Label text="Username" />
-            <TextField fx:id="tfUsername" promptText="Enter Username" />
+            <Label styleClass="normalLabel" text="Username" />
+            <TextField fx:id="tfUsername" maxWidth="370.0" promptText="Enter Username" />
          </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" />
-      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0">
+         <VBox.margin>
+            <Insets left="130.0" right="130.0" />
+         </VBox.margin>
+      </VBox>
+      <Button mnemonicParsing="false" onAction="#loginUser" styleClass="btnLogin" text="Login" />
+      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" styleClass="createAccHBox">
          <children>
-            <Button mnemonicParsing="false" onAction="#loginUser" text="Login" />
-            <Button mnemonicParsing="false" onAction="#createAccount" text="Create New Account" />
+            <Label text="No Account? " />
+            <Label onMouseClicked="#createAccount" styleClass="createAccountLabel" text="Create One" />
          </children>
+         <VBox.margin>
+            <Insets top="5.0" />
+         </VBox.margin>
       </HBox>
    </children>
 </VBox>

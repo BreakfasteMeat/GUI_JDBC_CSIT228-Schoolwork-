@@ -62,32 +62,46 @@
 }
 
 .scoreSection {
-    -fx-max-width: 170px;
-    -fx-pref-width: 170px;
-    -fx-min-width: 170px;
+    -fx-max-width: 270px;
+    -fx-pref-width: 230px;
+    -fx-min-width: 270px;
     -fx-background-color: #58A0FF;
 }
 .questionCard{
     -fx-background-color: white;
-    -fx-font-size: 13px;
+    -fx-font-size: 10px;
     -fx-padding: 10px;
+    -fx-end-margin: 10px;
+    -fx-start-margin: 10px;
+    -fx-max-width: 35px;
+    -fx-min-width: 35px;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
 }
 .questionCardCorrect{
     -fx-background-color: #00FF08;
     -fx-text-fill: white;
-    -fx-font-size: 13px;
+    -fx-font-size: 10px;
     -fx-padding: 10px;
     -fx-background-radius: 20px;
     -fx-border-radius: 20px;
+    -fx-max-width: 35px;
+    -fx-min-width: 35px;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
 
 }
 .questionCardWrong{
     -fx-background-color: #FF1D1D;
     -fx-text-fill: white;
-    -fx-font-size: 13px;
+    -fx-font-size: 10px;
     -fx-padding: 10px;
     -fx-background-radius: 20px;
     -fx-border-radius: 20px;
+    -fx-max-width: 35px;
+    -fx-min-width: 35px;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
 }
 .scoreLabel{
     -fx-text-fill: white;
@@ -147,3 +161,33 @@
 .dialog-pane .button-bar .button:hover {
     -fx-background-color: #2980b9;
 }
+.loginScreen{
+    -fx-background-color: #58A0FF;
+}
+.loginScreen .text-field{
+    -fx-padding: 5px;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-border-color: #004193;
+}
+.btnLogin{
+    -fx-background-color: #004193;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.loginTitle{
+    -fx-font-weight: bold;
+    -fx-font-size: 25px;
+    -fx-text-fill: #2D527C;
+}
+.normalLabel{
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+.createAccountLabel{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+

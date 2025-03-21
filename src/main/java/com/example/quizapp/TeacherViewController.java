@@ -43,6 +43,7 @@ public class TeacherViewController {
             alert.showAndWait();
             return;
         }
+
         SQLQuestions.addQuestion(tfQuestion.getText(), tfA.getText(), tfB.getText(), tfC.getText(), tfD.getText());
     }
     

@@ -1,6 +1,8 @@
 package com.example.quizapp;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLQuizUsers {
     static String initURL = "jdbc:mysql://localhost:3306";
@@ -94,6 +96,64 @@ public class SQLQuizUsers {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    public static List<Boolean> getStudentAnswers(String username, List<Question> questionList){
+        List<Boolean> booleanList = new ArrayList<>();
+        for(Question question : questionList){
+            booleanList.add(getStudentQuestionIsCorrect(question.id, username));
+        }
+        return booleanList;
+    }
+    private static Boolean getStudentQuestionIsCorrect(int question_id, String username){
+        String query = "SELECT " + ("question_" + question_id) + " FROM " + tablename_student + " WHERE (name = \"" + username + "\");";
+        try(
+                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                Statement statement = connection.createStatement();
+                ){
+            ResultSet rst = statement.executeQuery(query);
+            if(rst.next()){
+
+                Boolean isCorrect = rst.getBoolean("question_" + question_id);
+                if(rst.wasNull()) return null;
+                return isCorrect;
+            } else {
+                System.out.println("Did not find anything, damn");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static int getStudentScore(String username){
+        String query = "SELECT" + " score " + "FROM " + tablename_student + " WHERE (name = \"" + username + "\");";
+        try(
+                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                Statement statement = connection.createStatement();
+                ){
+            ResultSet rst = statement.executeQuery(query);
+            if(rst.next()){
+                System.out.println("Returning score...");
+                return rst.getInt("score");
+            } else {
+                return 0;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public static void updateStudentScore(String username, int score){
+        String SQL = "UPDATE " + tablename_student + " SET score = " + score + " WHERE (name = \"" + username + "\");";
+        try(
+                Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
+                Statement statement = connection.createStatement();
+        ){
+            statement.executeUpdate(SQL);
+            System.out.println("Successfully updated " + username + " score");
+        } catch (SQLException e){
+            e.printStackTrace();
         }
     }
 

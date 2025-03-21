@@ -40,12 +40,32 @@ public class StudentViewController {
     private void updateLblPage(){
         lblPage.setText(page + "/" + questions.size());
     }
-    public void initialize() throws IOException {
+    private void checkStudentAnswersDatabase(){
+        List<Boolean> boolList = SQLQuizUsers.getStudentAnswers(MainApplication.currentUser,questions);
+        System.out.println(boolList);
+        for(int i = 0;i < boolList.size(); i++){
+            if(boolList.get(i) != null){
+                questions.get(i).isAnswered = true;
+                QuestionCard q = questionCards.get(i);
+                q.getStyleClass().clear();
+                if(boolList.get(i)){
+                    q.getStyleClass().add("questionCardCorrect");
+                } else {
+                    q.getStyleClass().add("questionCardWrong");
+                }
+            }
+        }
+    }
+    public void initialize(){
         questions = new ArrayList<>();
         SQLQuestions.retrieveQuestions(questions);
         lblQuestion.setText("Question 1: " + questions.get(0).question);
         lblScore.setText(score + "/" + questions.size());
         questionCards = new ArrayList<>();
+        score = SQLQuizUsers.getStudentScore(MainApplication.currentUser);
+        lblScore.setText(score + "/" + questions.size());
+
+
         updateLblPage();
         for(int i = 0; i < questions.size(); i++){
             QuestionCard q = new QuestionCard(String.valueOf(i+1),i);
@@ -56,19 +76,36 @@ public class StudentViewController {
             q.getStyleClass().add("questionCard");
             q.setOnAction(this::onQuestionCardClicked);
         }
+        checkStudentAnswersDatabase();
         List<Button> btnClones = new ArrayList<>();
         btnClones.add(a);
         btnClones.add(b);
         btnClones.add(c);
         btnClones.add(d);
         btnChoices = new Button[]{a,b,c,d};
-        for(int i = 0;i < questions.get(0).choices.length;i++){
+        for(int i = 0;i < questions.get(page-1).choices.length;i++){
             int rand = (int)(Math.random() * btnClones.size());
             Button b = btnClones.remove(rand);
             b.setText(questions.get(page-1).choices[i]);
-            b.getStyleClass().clear();
-            b.getStyleClass().add("questionButton");
+            if(questions.get(page-1).isAnswered){
+                b.setDisable(true);
+                String item = b.getText();
+                if(Objects.equals(item, questions.get(page - 1).choices[0])){
+                    b.getStyleClass().clear();
+                    b.getStyleClass().add("correctButton");
+                } else {
+                    b.getStyleClass().clear();
+                    b.getStyleClass().add("wrongButton");
+                }
+                b.setOpacity(0.5);
+            } else {
+                b.setDisable(false);
+                b.getStyleClass().clear();
+                b.getStyleClass().add("questionButton");
+                b.setOpacity(1);
+            }
         }
+
         checkNavigationButton();
     }
     private void checkNavigationButton(){
@@ -77,6 +114,7 @@ public class StudentViewController {
     }
     public void onQuestionCardClicked(ActionEvent actionEvent) {
         page = ((QuestionCard)(actionEvent.getSource())).getIndex() + 1;
+        checkNavigationButton();
         updateLblPage();
         lblQuestion.setText("Question " + (page) + ": " + questions.get(page-1).question);
         List<Button> btnClones = new ArrayList<>();
@@ -158,6 +196,7 @@ public class StudentViewController {
             lblScore.setText(score + "/" + questions.size());
             q.getStyleClass().add("questionCardCorrect");
             isCorrect = true;
+            SQLQuizUsers.updateStudentScore(MainApplication.currentUser, score);
         } else {
             q.getStyleClass().add("questionCardWrong");
             isCorrect = false;
