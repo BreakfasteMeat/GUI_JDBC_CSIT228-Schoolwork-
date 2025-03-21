@@ -3,6 +3,8 @@ package com.example.quizapp;
 import java.sql.*;
 
 public class SQLQuizUsers {
+    static String initURL = "jdbc:mysql://localhost:3306";
+    static String DBNAME = "csit228f2";
     static String URL = "jdbc:mysql://localhost:3306/csit228f2";
     static String USER = "root";
     static String PASSWORD = "";
@@ -12,7 +14,8 @@ public class SQLQuizUsers {
         String createTableStudentSQL = "CREATE TABLE IF NOT EXISTS " + tablename_student + "(" +
                 " id INT AUTO_INCREMENT PRIMARY KEY," +
                 " name VARCHAR(255) NOT NULL," +
-                " score INT DEFAULT 0" +
+                " score INT DEFAULT 0," +
+                " isFinished BOOLEAN DEFAULT FALSE" +
                 ");";
 
         String createTableTeacherSQL = "CREATE TABLE IF NOT EXISTS " + tablename_teacher + "(" +

@@ -11,6 +11,7 @@ public class MainApplication extends Application {
     public static Stage stage;
     static int width = 820;
     static int height = 440;
+    static String currentUser = "";
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
@@ -27,8 +28,8 @@ public class MainApplication extends Application {
     }
 
     public static void main(String[] args) {
-        SQLQuizUsers.tableCheck();
-        SQLQuestions.tableCheck();
+        SQLSchemaUtils.initDB();
+        SQLSchemaUtils.createTables();
         launch();
     }
 }

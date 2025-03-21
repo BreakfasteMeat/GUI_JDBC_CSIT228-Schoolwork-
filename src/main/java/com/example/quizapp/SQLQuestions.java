@@ -87,4 +87,20 @@ public class SQLQuestions {
             throw new RuntimeException(e);
         }
     }
+    public static int getNumQuestions(){
+        String SQLQuery = "SELECT COUNT(*) AS total_rows FROM " + tablename;
+        try(
+                Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
+                Statement statement = connection.createStatement();
+        ){
+            ResultSet resultSet = statement.executeQuery(SQLQuery);
+            if(resultSet.next()){
+                return resultSet.getInt("total_rows");
+            }
+            return 0;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

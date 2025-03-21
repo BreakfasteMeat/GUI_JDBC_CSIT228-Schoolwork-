@@ -1,17 +1,22 @@
 package com.example.quizapp;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class StudentViewController {
+    public GridPane gpQuestionList;
     int score = 0;
     int page = 1;
     public Button btnBack;
@@ -26,7 +31,7 @@ public class StudentViewController {
     public Label lblScore;
     public List<Question> questions;
     public Button[] btnChoices;
-    public void initialize(){
+    public void initialize() throws IOException {
         questions = new ArrayList<>();
         SQLQuestions.retrieveQuestions(questions);
         lblQuestion.setText("Question 1: " + questions.get(0).question);

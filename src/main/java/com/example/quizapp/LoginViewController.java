@@ -21,10 +21,20 @@ public class LoginViewController {
     }
 
     private void loginAsTeacher(String username) throws IOException {
+        MainApplication.currentUser = username;
         MainApplication.changeScene("teacher-view.fxml");
     }
     private void loginAsStudent(String username) throws IOException {
-        MainApplication.changeScene("student-view.fxml");
+        if(SQLQuestions.getNumQuestions() <= 0){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Empty Quiz");
+            alert.setHeaderText(null);
+            alert.setContentText("Quiz has no questions, please check back later");
+            alert.showAndWait();
+        } else {
+            MainApplication.currentUser = username;
+            MainApplication.changeScene("student-view.fxml");
+        }
     }
 
     public void loginUser(ActionEvent event) throws IOException {
