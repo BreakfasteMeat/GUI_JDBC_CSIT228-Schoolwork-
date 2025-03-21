@@ -103,4 +103,17 @@ public class SQLQuestions {
         }
         return 0;
     }
+    public static void removeQuestion(int id){
+        String SQLQuery = "DELETE FROM tblquestions WHERE id = " + id;
+        try(
+                Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
+                Statement statement = connection.createStatement();
+                ){
+            statement.executeUpdate(SQLQuery);
+            SQLQuizUsers.removeQuestionColumn(id);
+        } catch (SQLException e){
+            e.printStackTrace();
+
+        }
+    }
 }

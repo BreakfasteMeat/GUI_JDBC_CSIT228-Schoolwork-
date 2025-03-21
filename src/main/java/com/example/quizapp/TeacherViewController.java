@@ -24,14 +24,20 @@ public class TeacherViewController {
         return !(tfQuestion.getText().isEmpty() && tfA.getText().isEmpty() && tfB.getText().isEmpty() && tfD.getText().isEmpty());
     }
 
+    public void updateQuestionList(){
+        for(int i = QuestionObsList.size();i < questions.size();i++){
+            QuestionObsList.add(questions.get(i).question);
+        }
+        lvQuestions.setItems(QuestionObsList);
+    }
     public void initialize(){
         questions = new ArrayList<>();
         SQLQuestions.retrieveQuestions(questions);
-        ListView<String> lvQuestions = new ListView<>(QuestionObsList);
+        QuestionObsList.clear();
+
         lvQuestions.getItems().clear();
-        for(Question q : questions){
-            lvQuestions.getItems().add(q.question);
-        }
+        updateQuestionList();
+
     }
 
     public void addQuestion(){
@@ -45,6 +51,13 @@ public class TeacherViewController {
         }
 
         SQLQuestions.addQuestion(tfQuestion.getText(), tfA.getText(), tfB.getText(), tfC.getText(), tfD.getText());
+        questions.clear();
+        SQLQuestions.retrieveQuestions(questions);
+        updateQuestionList();
     }
-    
+    public void onQuestionSelect(){
+        int indexSelected = lvQuestions.getSelectionModel().getSelectedIndex();
+
+    }
+
 }

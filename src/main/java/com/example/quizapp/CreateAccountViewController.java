@@ -3,13 +3,21 @@ package com.example.quizapp;
 import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class CreateAccountViewController {
     public TextField tfusername;
     public RadioButton rbteacher;
+    public ImageView logo;
 
+    public void initialize() {
+        Image image = new Image(Objects.requireNonNull(getClass().getResource("logo.png")).toExternalForm());
+        logo.setImage(image);
+    }
     public void createAccount(){
         String username = tfusername.getText();
         boolean isTeacher = rbteacher.isSelected();

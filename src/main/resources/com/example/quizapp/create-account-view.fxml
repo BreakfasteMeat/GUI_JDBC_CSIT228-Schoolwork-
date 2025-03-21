@@ -4,18 +4,21 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.quizapp.CreateAccountViewController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" styleClass="loginSignScreen" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.quizapp.CreateAccountViewController">
    <children>
-      <Label text="Create Account" />
-      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" spacing="5.0">
+      <ImageView fx:id="logo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <Label styleClass="loginTitle" text="QuickQuiz" />
+      <VBox maxWidth="370.0" prefHeight="20.0" prefWidth="370.0">
          <children>
-            <Label text="Username" />
-            <TextField fx:id="tfusername" />
+            <Label styleClass="normalLabel" text="Username" />
+            <TextField fx:id="tfusername" maxWidth="370.0" prefHeight="0.0" />
          </children>
-      </HBox>
+      </VBox>
+      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" spacing="5.0" />
       <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" />
       <RadioButton fx:id="rbteacher" mnemonicParsing="false" text="Teacher Account" />
       <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" spacing="5.0">

@@ -74,17 +74,6 @@ public class SQLQuizUsers {
             throw new RuntimeException(e);
         }
     }
-    public static void removeQuestion(String question_id){
-        String colName = "question_" + question_id;
-        String addColumnQuery = "ALTER TABLE" + tablename_student + " DELETE COLUMN " + colName;
-        try(Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
-            Statement statement = connection.createStatement();){
-            statement.executeUpdate(addColumnQuery);
-            System.out.println("Successfully removed " + question_id + " column");
-        } catch (SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
     public static void studentAnswerQuestion(String question_id, boolean isCorrect, String student_name){
         String SQLQuery = "UPDATE " + tablename_student + " SET " + question_id + " = " + isCorrect + " WHERE (name = \"" + student_name + "\");";
         try (
@@ -153,6 +142,19 @@ public class SQLQuizUsers {
             statement.executeUpdate(SQL);
             System.out.println("Successfully updated " + username + " score");
         } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void removeQuestionColumn(int question_id){
+        String SQLQuery = "ALTER TABLE " + tablename_student + " DELETE COLUMN question_" + question_id;
+        try(
+                Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
+                Statement statement = connection.createStatement();
+                ){
+            statement.executeUpdate(SQLQuery);
+            System.out.println("Successfully removed question_" + question_id + " column");
+
+        }catch (SQLException e){
             e.printStackTrace();
         }
     }

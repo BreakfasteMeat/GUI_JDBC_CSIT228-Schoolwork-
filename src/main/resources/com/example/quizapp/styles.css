@@ -161,10 +161,10 @@
 .dialog-pane .button-bar .button:hover {
     -fx-background-color: #2980b9;
 }
-.loginScreen{
+.loginSignScreen{
     -fx-background-color: #58A0FF;
 }
-.loginScreen .text-field{
+.loginSignScreen .text-field{
     -fx-padding: 5px;
     -fx-border-style: solid;
     -fx-border-width: 2px;
@@ -190,4 +190,5 @@
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
+
 

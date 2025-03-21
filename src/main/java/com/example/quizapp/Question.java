@@ -20,5 +20,16 @@ public class Question {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(question);
+        sb.append("\n");
+        for(int i = 0; i < choices.length; i++) {
+            sb.append(choices[i]);
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }
 
