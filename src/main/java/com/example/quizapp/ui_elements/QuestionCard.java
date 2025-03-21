@@ -7,6 +7,9 @@ public class QuestionCard extends Button{
     public QuestionCard(String text,int index){
         super(text);
         this.index = index;
-        
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

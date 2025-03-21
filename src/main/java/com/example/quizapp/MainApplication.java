@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainApplication extends Application {
     public static Stage stage;
@@ -17,6 +18,7 @@ public class MainApplication extends Application {
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), width, height);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
         stage.setTitle("Quiz App");
         stage.setScene(scene);
         stage.show();
@@ -24,6 +26,7 @@ public class MainApplication extends Application {
     public static void changeScene(String fxmlFile) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource(fxmlFile));
         Scene scene = new Scene(fxmlLoader.load(),width, height);
+        scene.getStylesheets().add(Objects.requireNonNull(MainApplication.class.getResource("styles.css")).toExternalForm());
         stage.setScene(scene);
     }
 

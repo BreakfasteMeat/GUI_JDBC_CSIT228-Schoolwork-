@@ -1,5 +1,6 @@
 package com.example.quizapp;
 
+import com.example.quizapp.ui_elements.QuestionCard;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,12 +31,23 @@ public class StudentViewController {
 
     public Label lblScore;
     public List<Question> questions;
+    public List<QuestionCard> questionCards;
     public Button[] btnChoices;
     public void initialize() throws IOException {
         questions = new ArrayList<>();
         SQLQuestions.retrieveQuestions(questions);
         lblQuestion.setText("Question 1: " + questions.get(0).question);
-        lblScore.setText("Score: " + score + "/" + questions.size());
+        lblScore.setText(score + "/" + questions.size());
+        questionCards = new ArrayList<>();
+        for(int i = 0; i < questions.size(); i++){
+            QuestionCard q = new QuestionCard(String.valueOf(i+1),i);
+            questionCards.add(q);
+            int row = i / 5;
+            int col = i % 5;
+            gpQuestionList.add(q, col, row);
+            q.getStyleClass().add("questionCard");
+            q.setOnAction(this::onQuestionCardClicked);
+        }
         List<Button> btnClones = new ArrayList<>();
         btnClones.add(a);
         btnClones.add(b);
@@ -46,13 +58,45 @@ public class StudentViewController {
             int rand = (int)(Math.random() * btnClones.size());
             Button b = btnClones.remove(rand);
             b.setText(questions.get(page-1).choices[i]);
-            b.setBackground(Background.fill(Paint.valueOf("WHITE")));
+            b.getStyleClass().clear();
+            b.getStyleClass().add("questionButton");
         }
         checkNavigationButton();
     }
     private void checkNavigationButton(){
         btnNext.setDisable(page >= questions.size());
         btnBack.setDisable(page <= 1);
+    }
+    public void onQuestionCardClicked(ActionEvent actionEvent) {
+        page = ((QuestionCard)(actionEvent.getSource())).getIndex() + 1;
+        lblQuestion.setText("Question " + (page) + ": " + questions.get(page-1).question);
+        List<Button> btnClones = new ArrayList<>();
+        btnClones.add(a);
+        btnClones.add(b);
+        btnClones.add(c);
+        btnClones.add(d);
+        for(int i = 0;i < questions.get(page-1).choices.length;i++){
+            int rand = (int)(Math.random() * btnClones.size());
+            Button b = btnClones.remove(rand);
+            b.setText(questions.get(page-1).choices[i]);
+            if(questions.get(page-1).isAnswered){
+                b.setDisable(true);
+                String item = b.getText();
+                if(Objects.equals(item, questions.get(page - 1).choices[0])){
+                    b.getStyleClass().clear();
+                    b.getStyleClass().add("correctButton");
+                } else {
+                    b.getStyleClass().clear();
+                    b.getStyleClass().add("wrongButton");
+                }
+                b.setOpacity(0.5);
+            } else {
+                b.setDisable(false);
+                b.getStyleClass().clear();
+                b.getStyleClass().add("questionButton");
+                b.setOpacity(1);
+            }
+        }
     }
     public void onNavigationCLick(ActionEvent event){
         if(event.getSource() == btnBack){
@@ -73,30 +117,46 @@ public class StudentViewController {
         for(int i = 0;i < questions.get(page-1).choices.length;i++){
             int rand = (int)(Math.random() * btnClones.size());
             Button b = btnClones.remove(rand);
+            b.setText(questions.get(page-1).choices[i]);
             if(questions.get(page-1).isAnswered){
                 b.setDisable(true);
+                String item = b.getText();
+                if(Objects.equals(item, questions.get(page - 1).choices[0])){
+                    b.getStyleClass().clear();
+                    b.getStyleClass().add("correctButton");
+                } else {
+                    b.getStyleClass().clear();
+                    b.getStyleClass().add("wrongButton");
+                }
+                b.setOpacity(0.5);
             } else {
                 b.setDisable(false);
+                b.getStyleClass().clear();
+                b.getStyleClass().add("questionButton");
+                b.setOpacity(1);
             }
-            b.setText(questions.get(page-1).choices[i]);
-            b.setBackground(Background.fill(Paint.valueOf("WHITE")));
         }
     }
 
     @FXML
     public void onAnswerClick(ActionEvent event) {
         String ans = ((Button)event.getSource()).getText();
+        QuestionCard q = questionCards.get(page-1);
+        q.getStyleClass().clear();
         if(Objects.equals(ans, questions.get(page - 1).choices[0])){
             score++;
-            lblScore.setText("Score: " + score + "/" + questions.size());
-
+            lblScore.setText(score + "/" + questions.size());
+            q.getStyleClass().add("questionCardCorrect");
+        } else {
+            q.getStyleClass().add("questionCardWrong");
         }
         for(Button b : btnChoices){
             String item = b.getText();
+            b.getStyleClass().clear();
             if(Objects.equals(item, questions.get(page - 1).choices[0])){
-                b.setBackground(Background.fill(Paint.valueOf("GREEN")));
+                b.getStyleClass().add("correctButton");
             } else {
-                b.setBackground(Background.fill(Paint.valueOf("RED")));
+                b.getStyleClass().add("wrongButton");
             }
             questions.get(page - 1).isAnswered = true;
         }
