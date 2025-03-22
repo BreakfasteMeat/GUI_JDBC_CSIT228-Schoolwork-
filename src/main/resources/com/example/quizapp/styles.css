@@ -191,4 +191,53 @@
     -fx-font-weight: bold;
 }
 
+.teacherView{
+    -fx-background-color: #92c1ff;
+}
+.teacherView .text-field{
+    -fx-padding: 5px;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-border-color: #004193;
+}
+.teacherView .list-view{
+    -fx-padding: 5px;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #004193;
+    -fx-wrap-text: true;
+}
+.teacherView .button{
+    -fx-background-color: #004193;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.btnBack{
+    -fx-background-color: none;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+
+}
+/* Style the radio button label */
+.radio-button {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+.radio-button .radio {
+    -fx-background-color: white;
+    -fx-border-color: #004193;
+    -fx-background-radius: 100px;
+    -fx-border-radius: 100px;
+    -fx-border-width: 2px;
+}
+.teacherView .label{
+    -fx-font-weight: bold;
+}
+
 

@@ -25,7 +25,10 @@ public class Question {
         StringBuilder sb = new StringBuilder();
         sb.append(question);
         sb.append("\n");
+        char character = 'A';
         for(int i = 0; i < choices.length; i++) {
+            sb.append(character++);
+            sb.append(". ");
             sb.append(choices[i]);
             sb.append("\n");
         }

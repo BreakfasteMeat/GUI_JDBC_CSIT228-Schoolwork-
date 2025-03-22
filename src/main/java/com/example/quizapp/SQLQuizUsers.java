@@ -36,17 +36,20 @@ public class SQLQuizUsers {
             throw new RuntimeException(e);
         }
     }
-    public static boolean retrieveUserExists(String username, String tablename){
-        try(Connection connection = DriverManager.getConnection(URL,USER, PASSWORD);
-            Statement statement = connection.createStatement();
-        ) {
-            String query = "SELECT * FROM " + tablename +" WHERE name = '" + username + "'";
-            ResultSet resultSet = statement.executeQuery(query);
-            return resultSet.next();
+    public static boolean retrieveUserExists(String username, String tablename) {
+        String query = "SELECT 1 FROM " + tablename + " WHERE BINARY name = ? LIMIT 1";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next(); // Returns true if a record exists
+            }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database error: " + e.getMessage(), e);
         }
     }
+
     public static void addUser(String username, String table){
         try(Connection connection = DriverManager.getConnection(URL,USER, PASSWORD);
             PreparedStatement statement = connection.prepareStatement(
@@ -146,7 +149,7 @@ public class SQLQuizUsers {
         }
     }
     public static void removeQuestionColumn(int question_id){
-        String SQLQuery = "ALTER TABLE " + tablename_student + " DELETE COLUMN question_" + question_id;
+        String SQLQuery = "ALTER TABLE " + tablename_student + " DROP COLUMN question_" + question_id;
         try(
                 Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
                 Statement statement = connection.createStatement();

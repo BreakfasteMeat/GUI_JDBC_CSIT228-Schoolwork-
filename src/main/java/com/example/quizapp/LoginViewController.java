@@ -52,11 +52,24 @@ public class LoginViewController {
             loginAsTeacher(getUsername());
         } else if(SQLQuizUsers.retrieveUserExists(getUsername(),SQLQuizUsers.tablename_student)){
             loginAsStudent(getUsername());
+        } else if(tfUsername.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Empty Username");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter a valid username");
+
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            alert.getDialogPane().getStyleClass().add("custom-alert");
+            alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
             alert.setContentText("Username does not exist!");
+
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+            alert.getDialogPane().getStyleClass().add("custom-alert");
+
             alert.showAndWait();
             return;
         }

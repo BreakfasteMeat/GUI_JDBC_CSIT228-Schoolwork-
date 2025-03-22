@@ -104,7 +104,7 @@ public class SQLQuestions {
         return 0;
     }
     public static void removeQuestion(int id){
-        String SQLQuery = "DELETE FROM tblquestions WHERE id = " + id;
+        String SQLQuery = "DELETE FROM tblquestions WHERE id="+id;
         try(
                 Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
                 Statement statement = connection.createStatement();
@@ -115,5 +115,33 @@ public class SQLQuestions {
             e.printStackTrace();
 
         }
+    }
+    public static void editQuestion(int question_id, String question, String... choices){
+        String SQLQuery = "UPDATE tblquestions " +
+                "SET question = '" + question + "'," +
+                "a = '" + choices[0] + "'," +
+                "b = '" + choices[1] + "'," +
+                "c = '" + choices[2] + "'," +
+                "d = '" + choices[3] + "'" + " WHERE id = " + question_id;
+        try(
+                Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
+                Statement statement = connection.createStatement();
+                ){
+            statement.executeUpdate(SQLQuery);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static boolean checkDuplicateQuestion(String question){
+        String SQLQuery = "SELECT * FROM tblquestions WHERE question = '" + question + "'";
+        try(Connection connection = DriverManager.getConnection(URL,USER,PASSWORD);
+        Statement statement = connection.createStatement();
+        ){
+            ResultSet resultSet = statement.executeQuery(SQLQuery);
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

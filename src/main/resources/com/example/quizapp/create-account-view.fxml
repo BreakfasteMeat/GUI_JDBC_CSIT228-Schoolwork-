@@ -23,8 +23,8 @@
       <RadioButton fx:id="rbteacher" mnemonicParsing="false" text="Teacher Account" />
       <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" spacing="5.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#backButtonClicked" text="Back" />
-            <Button mnemonicParsing="false" onAction="#createAccount" text="Create Account" />
+            <Button mnemonicParsing="false" onAction="#backButtonClicked" styleClass="btnBack" text="Back" />
+            <Button mnemonicParsing="false" onAction="#createAccount" styleClass="btnLogin" text="Create Account" />
          </children>
       </HBox>
    </children>
