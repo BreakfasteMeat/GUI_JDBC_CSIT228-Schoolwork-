@@ -43,7 +43,7 @@
       <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteQuestion" text="Delete Question" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
       <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateQuestion" text="Update Question" GridPane.columnIndex="3" GridPane.rowIndex="4" />
       <Button mnemonicParsing="false" onAction="#onExitClick" text="←" />
-      <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" />
+      <ListView fx:id="lvStudents" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" />
       <Label text="Student List:" GridPane.columnIndex="5" />
    </children>
    <padding>

@@ -16,8 +16,7 @@ public class SQLQuizUsers {
         String createTableStudentSQL = "CREATE TABLE IF NOT EXISTS " + tablename_student + "(" +
                 " id INT AUTO_INCREMENT PRIMARY KEY," +
                 " name VARCHAR(255) NOT NULL," +
-                " score INT DEFAULT 0," +
-                " isFinished BOOLEAN DEFAULT FALSE" +
+                " score INT DEFAULT 0" +
                 ");";
 
         String createTableTeacherSQL = "CREATE TABLE IF NOT EXISTS " + tablename_teacher + "(" +
@@ -160,6 +159,27 @@ public class SQLQuizUsers {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public static List<String> getAllStudents() {
+        List<String> students = new ArrayList<>();
+        String query = "SELECT name, score FROM " + tablename_student;
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int score = resultSet.getInt("score");
+                students.add(name + " - Score: " + score);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return students;
     }
 
 }

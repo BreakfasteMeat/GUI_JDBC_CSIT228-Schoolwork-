@@ -23,6 +23,8 @@ public class TeacherViewController {
     int indexSelected = -1;
     public Button btnUpdate;
     public Button btnDelete;
+    public ListView<String> lvStudents;
+    public List<String> students; // kapoy na himo student class
 
     //HELPER FUNCTIONS
     private boolean allTextFieldsValid(){
@@ -54,6 +56,12 @@ public class TeacherViewController {
         lvQuestions.setOnMouseClicked(event -> {
             onQuestionSelect();
         });
+
+        students = SQLQuizUsers.getAllStudents();
+        for(String s : students){
+            s += ("/" + questions.size());
+            lvStudents.getItems().add(s);
+        }
 
         btnUpdate.setDisable(true);
         btnDelete.setDisable(true);
